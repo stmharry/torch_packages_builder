@@ -30,18 +30,6 @@ on:
         description: "Include commit hash in version"
         type: boolean
         default: false
-      linux-wheels:
-        description: "Build Linux wheels"
-        type: boolean
-        default: true
-      windows-wheels:
-        description: "Build Windows wheels"
-        type: boolean
-        default: true
-      macos-wheels:
-        description: "Build MacOS wheels"
-        type: boolean
-        default: true
 
 jobs:
   get-jobs:
@@ -62,9 +50,9 @@ jobs:
           TORCH_VERSION: ${{ inputs.torch-version }}
           LIMIT_PYTHON: ${{ inputs.limit-python }}
           LIMIT_COMPUTE_PLATFORM: ${{ inputs.limit-compute-platform }}
-          LINUX_WHEELS: ${{ inputs.linux-wheels }}
-          WINDOWS_WHEELS: ${{ inputs.windows-wheels }}
-          MACOS_WHEELS: ${{ inputs.macos-wheels }}
+          LINUX_WHEELS: true 
+          WINDOWS_WHEELS: false 
+          MACOS_WHEELS: false 
         run: |
           set -eu
           echo "matrix=$(python get_jobs.py)" >> $GITHUB_OUTPUT
