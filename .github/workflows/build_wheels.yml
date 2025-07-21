@@ -23,6 +23,9 @@ on:
       limit-compute-platform:
         description: "PyTorch compute platforms, separated with a comma"
         type: string
+      python-packages:
+        description: "Extra python packages to install via pip (space separated)"
+        type: string
       include-hash:
         description: "Include commit hash in version"
         type: boolean
@@ -184,6 +187,10 @@ jobs:
             torch==${{ matrix.torch-version }} \
             ninja \
             numpy$NUMPY_VERSION_LIMIT
+
+          if [ -n "${{ inputs.python-packages }}" ]; then
+            pip install --upgrade ${{ inputs.python-packages }}
+          fi
         shell: bash
 
       - name: Apply package specific steps
