@@ -63,10 +63,26 @@ fi
 
 if [[ $REPO == "traveller59/spconv" ]] || [[ $REPO == "AIDirect/spconv" ]]; then
   echo "SPCONV_DISABLE_JIT=1" >> "$GITHUB_ENV"
+
+  pip install pccm==0.4.16 ccimport==0.4.4 pybind11==2.6.0 fire
+  if [[ "$COMPUTE_PLATFORM" == "cpu" ]]; then
+    pip install cumm==0.7.11
+
+  elif [[ "$COMPUTE_PLATFORM" == "cu128" ]]; then
+    pip install cumm==0.8.2 --extra-index-url https://aidirect.github.io/torch_packages_builder
+
+  fi
 fi
 
 if [[ $REPO == "FindDefinition/cumm" ]]; then
+  pip install pccm==0.4.15 pybind11==2.6.0 fire sympy
+  
+  patch -p0 < "$SCRIPT_DIR"/package_specific/cumm.patch
+
   echo "CUMM_DISABLE_JIT=1" >> "$GITHUB_ENV"
-  echo "CUMM_CUDA_VERSION=${COMPUTE_PLATFORM/cu/}" >> "$GITHUB_ENV"
-  echo "CUMM_CUDA_ARCH_LIST=all" >> "$GITHUB_ENV"
+  
+  if [[ "$COMPUTE_PLATFORM" == cu* ]]; then
+    echo "CUMM_CUDA_VERSION=${COMPUTE_PLATFORM:2:2}.${COMPUTE_PLATFORM:4}" >> "$GITHUB_ENV"
+    echo "CUMM_CUDA_ARCH_LIST=all" >> "$GITHUB_ENV"
+  fi
 fi

@@ -1,0 +1,5 @@
+--- cumm/tensorview_bind.py
++++ cumm/tensorview_bind.py
+@@ -88,7 +88,7 @@
+-            cuda_ver = get_cuda_version_by_nvcc().split(".")
++            cuda_ver = CUMM_CUDA_VERSION.split(".")
