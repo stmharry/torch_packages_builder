@@ -64,3 +64,9 @@ fi
 if [[ $REPO == "traveller59/spconv" ]] || [[ $REPO == "AIDirect/spconv" ]]; then
   echo "SPCONV_DISABLE_JIT=1" >> "$GITHUB_ENV"
 fi
+
+if [[ $REPO == "FindDefinition/cumm" ]]; then
+  echo "CUMM_DISABLE_JIT=1" >> "$GITHUB_ENV"
+  echo "CUMM_CUDA_VERSION=${COMPUTE_PLATFORM/cu/}" >> "$GITHUB_ENV"
+  echo "CUMM_CUDA_ARCH_LIST=all" >> "$GITHUB_ENV"
+fi
