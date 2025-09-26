@@ -61,6 +61,6 @@ if [[ $REPO == "NVlabs/tiny-cuda-nn" ]]; then
   echo "TCNN_CUDA_ARCHITECTURES=${TORCH_CUDA_ARCH_LIST}" | sed "s/\(\.\|\+PTX\)//g" >> "$GITHUB_ENV"
 fi
 
-if [[ $REPO == "AIDirect/spconv" ]]; then
+if [[ $REPO == "traveller59/spconv" ]] || [[ $REPO == "AIDirect/spconv" ]]; then
   echo "SPCONV_DISABLE_JIT=1" >> "$GITHUB_ENV"
 fi
