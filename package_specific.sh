@@ -61,6 +61,18 @@ if [[ $REPO == "NVlabs/tiny-cuda-nn" ]]; then
   echo "TCNN_CUDA_ARCHITECTURES=${TORCH_CUDA_ARCH_LIST}" | sed "s/\(\.\|\+PTX\)//g" >> "$GITHUB_ENV"
 fi
 
+if [[ $REPO == "Dao-AILab/flash-attention" ]]; then
+  pip install packaging psutil
+fi
+
+if [[ $REPO == "rusty1s/pytorch_cluster" ]] || [[ $REPO == "rusty1s/pytorch_sparse" ]]; then
+  pip install scipy
+fi
+
+if [[ $REPO == "pyg-team/pyg-lib" ]]; then
+  pip install mkl-include==2022.2 mkl-static==2022.2
+fi
+
 if [[ $REPO == "traveller59/spconv" ]] || [[ $REPO == "AIDirect/spconv" ]]; then
   echo "SPCONV_DISABLE_JIT=1" >> "$GITHUB_ENV"
 
@@ -76,11 +88,11 @@ fi
 
 if [[ $REPO == "FindDefinition/cumm" ]]; then
   pip install pccm==0.4.15 pybind11==2.6.0 fire sympy
-  
+
   patch -p0 < "$SCRIPT_DIR"/package_specific/cumm.patch
 
   echo "CUMM_DISABLE_JIT=1" >> "$GITHUB_ENV"
-  
+
   if [[ "$COMPUTE_PLATFORM" == cu* ]]; then
     echo "CUMM_CUDA_VERSION=${COMPUTE_PLATFORM:2:2}.${COMPUTE_PLATFORM:4}" >> "$GITHUB_ENV"
     echo "CUMM_CUDA_ARCH_LIST=all" >> "$GITHUB_ENV"
